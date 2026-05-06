@@ -1,0 +1,100 @@
+; Copyright (C) 2026 Axel H. Karlsson
+; You may use this file under the terms of the BSD-3-clause licence,
+; which you may find in the project root.
+
+(version 1)
+(deny default)
+
+(allow file-read*
+	(subpath "/System")
+	(subpath "/Library/Preferences")
+	(subpath "/private/etc")
+	(subpath "/private/var")
+	(subpath "/usr/share")
+	(subpath "/usr/bin")
+	(subpath "/usr/lib")
+	(subpath "/usr/local/bin")
+	(subpath "/lib")
+	(subpath "/bin")
+	(subpath (param "HOME"))
+	(literal "/")
+	
+	(regex #"/dev/tty.*")
+
+	(literal "/dev/ptmx")
+	(literal "/dev/dtracehelper") 
+	(literal "/private")
+
+	; We only need `literal`, not `subpath`, since /etc & /var points to /private/{etc,var}.	
+	(literal "/etc")
+	(literal "/var"))
+
+(allow file-write*
+	(literal "/dev/ptmx")
+	(literal "/dev/dtracehelper"))
+
+(allow process-exec
+	(subpath "/System/Applications/Utilities/Terminal.app")
+	(subpath "/bin")
+	(subpath "/usr/bin")
+	(subpath "/usr/local/bin")
+	(subpath "/opt"))
+
+(allow sysctl-read)
+
+(allow file-ioctl)
+
+(allow user-preference-read)
+(allow user-preference-write
+	(preference-domain "com.apple.terminal"))
+
+(allow mach-lookup
+	; Notifications
+	(global-name "com.apple.system.notification_center")
+	
+	; Logging
+	(global-name "com.apple.logd")
+	(global-name "com.apple.diagnosticd")
+	(global-name "com.apple.analyticsd")
+	
+	; TCC (Transparency, Consent & Control)
+	(global-name "com.apple.tccd.system")
+
+	; Window Server
+	(global-name "com.apple.windowserver.active")
+	
+	; Standard macOS services
+	(global-name "com.apple.CoreServices.coreservicesd")
+	
+	; Allow external storage management
+	(global-name "com.apple.DiskArbitration.diskarbitrationd")
+	
+	; Pretty sure this is a graphics-related service,
+	; there was a CVE a few years ago regarding this one (in Safari),
+	; but I opt to keep it due to potential performance issues otherwise.
+	(global-name "com.apple.CARenderServer")
+	
+	; Not sure about this one...
+	(global-name "com.apple.iconservices")
+
+	; Standard dock functions
+	(global-name "com.apple.dock.server")
+	(global-name "com.apple.dock.fullscreen")
+	
+	(global-name "com.apple.bsd.dirhelper")
+	(global-name "com.apple.windowmanager.server")
+
+	; Provides touchbar functionality on certain Macs (I guess)
+	(global-name "com.apple.touchbarserver.mig")
+	(global-name "com.apple.system.opendirectory.libinfo")
+
+	; Pretty sure this is essential
+	(global-name "com.apple.Terminal.ServiceProvider")
+	(global-name "com.apple.coreservices.launchservicesd")
+	(global-name "com.apple.coreservices.quarantine-resolver")
+	(global-name "com.apple.coreservices.appleevents"))
+
+(allow ipc-posix-shm-read-data
+	(ipc-posix-name "apple.shm.notification_center"))
+
+(deny hid-control)
