@@ -1,6 +1,9 @@
 # Hardened-Terminal
 This repository contains a Seatbelt profile for hardening macOS' built-in Terminal.app.
 
+**IMPORTANT:** The profile currently does not work properly and work is put into it to make it work eventually.  
+Please consider contributing!
+
 ## Rationale
 
 Terminal Emulators, I believe, are often an oversight in security, and is an inherent attack surface due to their complexity mostly from parsing escape codes and the like.  
