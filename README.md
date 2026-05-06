@@ -1,2 +1,2 @@
-# sshwrap
-Sandbox profiles used for Terminal.app for remote SSH access only.
+# Hardened-Terminal
+This repository contains a Seatbelt profile for hardening macOS' built-in Terminal.app.
