@@ -1,3 +1,6 @@
 #!/usr/bin/env zsh
 
-sandbox-exec -f profile.sb -D HOME=$HOME /System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
+sandbox-exec
+    -f profile.sb
+    -D HOME=$HOME
+    /System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
